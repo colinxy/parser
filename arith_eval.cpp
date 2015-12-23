@@ -1,6 +1,11 @@
 // arith_eval.cpp
 
 
+#include <iostream>
+#include "arith_eval.h"
+using namespace std;
+
+
 void error_status1(const string &expr, int &index) {
     cerr << "mismatched parenthesis at index " << index << endl;
     cerr << expr.substr(1, expr.size()-2) << endl;

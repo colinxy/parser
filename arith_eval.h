@@ -35,11 +35,16 @@ typedef union EXPR EXPR;
 
 const char ARITH_SUPPORTED[] {'+', '-', '*', '/'};
 
+  // error analysis
 void   error_status1 (const string &expr, int &index);
 void   error_status2 (const string &expr, int &index);
 void   error_status3 (const string &expr, int &index);
+
+  // untility function
 void   bypass_space  (const string &expr, int &index);
 bool   is_num        (const string &expr, int &index);
+
+  // parser
 double infix_eval    (vector<EXPR>);
 double parse_num     (const string &expr, int &index);
 double parse_paren   (const string &expr, int &index);
