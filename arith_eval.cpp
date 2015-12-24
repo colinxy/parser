@@ -106,6 +106,8 @@ double parse_num(const string &expr, int &index) {
 
     if (expr[index] != '.')
         return sign * integer;
+    else // expr[index] == '.'
+        ++index;
 
     // after the . sign
     while (isdigit(c = expr[index])) {
