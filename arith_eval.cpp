@@ -105,7 +105,7 @@ double parse_num(const string &expr, int &index) {
     }
 
     if (expr[index] != '.')
-        return integer;
+        return sign * integer;
 
     // after the . sign
     while (isdigit(c = expr[index])) {
@@ -114,7 +114,7 @@ double parse_num(const string &expr, int &index) {
         ++index;
     }
 
-    return integer + (double)decimal / decimal_offby;
+    return sign * (integer + (double)decimal / decimal_offby);
 }
 
 double parse_paren(const string &expr, int &index) {
