@@ -1,8 +1,11 @@
 // arith_eval.cpp
 
 
-#include <iostream>
 #include "arith_eval.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cctype>
 using namespace std;
 
 
@@ -22,26 +25,6 @@ void error_status3(const string &expr, int &index) {
     cerr << "unexpected expression at index " << index << endl;
     cerr << expr.substr(1, expr.size()-2) << endl;
     cerr << string(index-1, '~') << '^' << endl;
-}
-
-inline bool arith_supported(char arith) {
-    for (int i = 0; i < sizeof(ARITH_SUPPORTED); ++i)
-        if (arith == ARITH_SUPPORTED[i])
-            return true;
-
-    return false;
-}
-
-inline void bypass_space(const string &expr, int &index) {
-    while (index < expr.size() && isspace(expr[index]))
-        ++index;
-}
-
-bool is_num(const string &expr, int &index) {
-    return isdigit(expr[index]) ||
-           expr[index] == '-' ||
-           expr[index] == '+' ||
-           expr[index] == '.';
 }
 
 // flat infix expression evaluation
@@ -122,7 +105,7 @@ double parse_num(const string &expr, int &index) {
 double parse_paren(const string &expr, int &index) {
     bypass_space(expr, ++index);
 
-    EXPECT expected = EXPECT::NUM;
+    TOKEN expected = TOKEN::NUM;
 
     vector<EXPR> expressions;
 
@@ -132,7 +115,7 @@ double parse_paren(const string &expr, int &index) {
             return infix_eval(expressions);
         }
 
-        if (expected == EXPECT::OP) {
+        if (expected == TOKEN::OP) {
             if (arith_supported(expr[index])) {
                 // operator
                 EXPR op = {.op = expr[index]};
@@ -149,12 +132,12 @@ double parse_paren(const string &expr, int &index) {
                 throw 2;
             }
 
-        } else if (expected == EXPECT::NUM) {
+        } else if (expected == TOKEN::NUM) {
             EXPR num;
             num.num = parse_expr(expr, index);
             expressions.push_back(num);
 
-            expected = EXPECT::OP;
+            expected = TOKEN::OP;
         }
 
         bypass_space(expr, index);

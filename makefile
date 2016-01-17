@@ -1,6 +1,6 @@
 CXX = g++
 
-PROG     = arith_eval
+PROG     = arith_eval.out
 CPPFLAGS = -std=c++11 -g
 OBJS 	 = main.o arith_eval.o
 

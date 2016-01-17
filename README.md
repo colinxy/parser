@@ -10,3 +10,5 @@ expression and print it to stdout.
 
 If the stdin contains invalid arithmetic expression,
 the program will print out the error output to stderr.
+
+The program can now run with command line argument.
