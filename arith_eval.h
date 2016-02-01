@@ -11,6 +11,7 @@
  *     1 : mismatched parenthesis
  *     2 : unrecognized operator
  *     3 : unexpected expression
+ *     4 : empty parenthesis
  */
 
 #include <string>
@@ -34,9 +35,10 @@ typedef union EXPR EXPR;
 const char ARITH_SUPPORTED[] {'+', '-', '*', '/'};
 
   // error analysis
-void   error_status1 (const std::string &expr, int &index);
-void   error_status2 (const std::string &expr, int &index);
-void   error_status3 (const std::string &expr, int &index);
+//void   error_status1 (const std::string &expr, const int &index);
+//void   error_status2 (const std::string &expr, const int &index);
+//void   error_status3 (const std::string &expr, const int &index);
+//void   error_status4 (const std::string &expr, const int &index);
 
   // untility functions
 inline bool arith_supported(char arith) {
@@ -52,7 +54,7 @@ inline void bypass_space(const std::string &expr, int &index) {
         ++index;
 }
 
-inline bool is_num(const std::string &expr, int &index) {
+inline bool is_num(const std::string &expr, const int &index) {
     return isdigit(expr[index]) ||
            expr[index] == '-'   ||
            expr[index] == '+'   ||

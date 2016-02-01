@@ -9,26 +9,33 @@
 using namespace std;
 
 
-void error_status1(const string &expr, int &index) {
+void error_status1(const string &expr, const int &index) {
     cerr << "mismatched parenthesis at index " << index << endl;
     cerr << expr.substr(1, expr.size()-2) << endl;
     cerr << string(index-1, '~') << '^' << endl;
 }
 
-void error_status2(const string &expr, int &index) {
+void error_status2(const string &expr, const int &index) {
     cerr << "unrecognized operator at index " << index << endl;
     cerr << expr.substr(1, expr.size()-2) << endl;
     cerr << string(index-1, '~') << '^' << endl;
 }
 
-void error_status3(const string &expr, int &index) {
+void error_status3(const string &expr, const int &index) {
     cerr << "unexpected expression at index " << index << endl;
+    cerr << expr.substr(1, expr.size()-2) << endl;
+    cerr << string(index-1, '~') << '^' << endl;
+}
+
+void error_status4(const string &expr, const int &index) {
+    cerr << "empty expression at index " << index << endl;
     cerr << expr.substr(1, expr.size()-2) << endl;
     cerr << string(index-1, '~') << '^' << endl;
 }
 
 // flat infix expression evaluation
 double infix_eval(vector<EXPR> exprs) {
+
     // first level operator: *, /
     for (int i = 1; i < exprs.size(); i+=2) {
         if (exprs[i].op == '*') {
@@ -112,6 +119,11 @@ double parse_paren(const string &expr, int &index) {
     while (index < expr.size()) {
         if (expr[index] == ')') {
             ++index;
+            if (expressions.empty()) {
+                // empty expression
+                error_status4(expr, index-1);
+                throw 4;
+            }
             return infix_eval(expressions);
         }
 
